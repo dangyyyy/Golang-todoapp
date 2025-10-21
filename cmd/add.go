@@ -2,6 +2,7 @@ package cmd
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/spf13/cobra"
 )
@@ -9,9 +10,10 @@ import (
 var addCmd = &cobra.Command{
 	Use:   "add [название задачи]",
 	Short: "Добавить новую задачу",
-	Args:  cobra.ExactArgs(1),
+	Args:  cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		todos.Add(args[0])
+		prior, _ := strconv.Atoi(args[1])
+		todos.Add(args[0], prior)
 		if err := storage.Save(todos); err != nil {
 			return err
 		}

@@ -13,7 +13,7 @@ var editCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(2),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		id, _ := strconv.Atoi(args[0])
-		if err := todos.Edit(id, args[1]); err != nil {
+		if err := todos.EditTask(id, args[1]); err != nil {
 			return err
 		}
 		if err := storage.Save(todos); err != nil {
