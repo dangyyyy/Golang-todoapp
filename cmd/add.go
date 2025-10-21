@@ -2,26 +2,28 @@ package cmd
 
 import (
 	"fmt"
-	"strconv"
-
 	"github.com/spf13/cobra"
 )
+
+var priority int
 
 var addCmd = &cobra.Command{
 	Use:   "add [название задачи]",
 	Short: "Добавить новую задачу",
-	Args:  cobra.ExactArgs(2),
+	Long:  "Добавляет новую задачу с возможностью указать приоритет",
+	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		prior, _ := strconv.Atoi(args[1])
-		todos.Add(args[0], prior)
+		title := args[0]
+		todos.Add(title, priority)
 		if err := storage.Save(todos); err != nil {
 			return err
 		}
-		fmt.Println("Задача добавлена:", args[0])
+		fmt.Println("Задача добавлена:", title)
 		return nil
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(addCmd)
+	addCmd.Flags().IntVarP(&priority, "priority", "p", 2, "Приоритет задачи (1 = высокий, 2 = средний, 3 = низкий)")
 }
