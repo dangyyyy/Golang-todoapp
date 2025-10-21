@@ -101,11 +101,11 @@ func (todos *Todos) Print() {
 		priority := ""
 		switch t.Priority {
 		case 1:
-			priority = "Низкий"
+			priority = "Высокий"
 		case 2:
 			priority = "Средний"
 		case 3:
-			priority = "Высокий"
+			priority = "Низкий"
 		}
 
 		if t.Completed {
