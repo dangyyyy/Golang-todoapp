@@ -35,6 +35,7 @@ func (todos *Todos) Add(title string, priority int) {
 	}
 	*todos = append(*todos, todo)
 }
+
 func (todos *Todos) validateIndex(index int) error {
 	if index < 0 || index >= len(*todos) {
 		err := errors.New("invalid index")
@@ -43,59 +44,69 @@ func (todos *Todos) validateIndex(index int) error {
 	}
 	return nil
 }
+
 func (todos *Todos) Delete(index int) error {
 	t := *todos
-	if err := t.validateIndex(index); err != nil {
+	if err := t.validateIndex(index - 1); err != nil {
 		return err
 	}
-	*todos = append(t[:index], t[index+1:]...)
+	*todos = append(t[:index-1], t[index:]...)
 	return nil
 }
+
 func (todos *Todos) Clear() {
-	t := *todos
-	*todos = t[:0]
-	return
+	*todos = (*todos)[:0]
 }
 
 func (todos *Todos) Toggle(index int) error {
 	t := *todos
-	if err := t.validateIndex(index); err != nil {
+	if err := t.validateIndex(index - 1); err != nil {
 		return err
 	}
-	isCompleted := t[index].Completed
+	isCompleted := t[index-1].Completed
 	if !isCompleted {
 		compeletime := time.Now()
-		t[index].Completed = true
-		t[index].CompletedAt = &compeletime
+		t[index-1].Completed = true
+		t[index-1].CompletedAt = &compeletime
 	}
-	t[index].Completed = !isCompleted
+	t[index-1].Completed = !isCompleted
 	return nil
 }
+
 func (todos *Todos) EditTask(index int, title string) error {
 	t := *todos
-	if err := t.validateIndex(index); err != nil {
+	if err := t.validateIndex(index - 1); err != nil {
 		return err
 	}
-
-	t[index].Title = title
+	t[index-1].Title = title
 	return nil
 }
+
 func (todos *Todos) ChangePriority(index int, priority int) error {
 	t := *todos
-	if err := t.validateIndex(index); err != nil {
+	if err := t.validateIndex(index - 1); err != nil {
 		return err
 	}
-
-	t[index].Priority = priority
+	t[index-1].Priority = priority
 	return nil
 }
 
-func (todos *Todos) Print() {
+func PrintFiltered(todos Todos, high, medium, low bool) {
 	tbl := table.New(os.Stdout)
 	tbl.SetRowLines(false)
 	tbl.SetHeaders("#", "Задачи", "Приоритет", "Выполнено", "Создано", "Завершено")
 
-	for index, t := range *todos {
+	for index, t := range todos {
+		if high && t.Priority != 1 {
+			continue
+		}
+		if medium && t.Priority != 2 {
+			continue
+		}
+		if low && t.Priority != 3 {
+			continue
+		}
+
 		completed := "Нет"
 		completedAt := ""
 		priority := ""
@@ -117,14 +128,7 @@ func (todos *Todos) Print() {
 
 		createdAt := t.CreatedAt.Format("02.01.2006 15:04")
 
-		tbl.AddRow(
-			strconv.Itoa(index),
-			t.Title,
-			priority,
-			completed,
-			createdAt,
-			completedAt,
-		)
+		tbl.AddRow(strconv.Itoa(index+1), t.Title, priority, completed, createdAt, completedAt)
 	}
 
 	tbl.Render()

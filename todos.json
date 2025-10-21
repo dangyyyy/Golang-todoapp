@@ -7,13 +7,6 @@
         "CompletedAt": null
     },
     {
-        "Title": "Поесть салат",
-        "Completed": false,
-        "Priority": 2,
-        "CreatedAt": "2025-10-21T23:36:02.488996+03:00",
-        "CompletedAt": null
-    },
-    {
         "Title": "Пожрать",
         "Completed": false,
         "Priority": 3,
@@ -22,9 +15,9 @@
     },
     {
         "Title": "выпить пива",
-        "Completed": false,
-        "Priority": 2,
-        "CreatedAt": "2025-10-21T23:36:17.227963+03:00",
-        "CompletedAt": null
+        "Completed": true,
+        "Priority": 1,
+        "CreatedAt": "2025-10-21T23:54:42.821859+03:00",
+        "CompletedAt": "2025-10-21T23:54:53.754885+03:00"
     }
 ]
