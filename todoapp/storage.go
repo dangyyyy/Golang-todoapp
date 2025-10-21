@@ -25,7 +25,7 @@ func (s *Storage[T]) Load(data *T) error {
 	fileData, err := os.ReadFile(s.FileName)
 	if err != nil {
 		if os.IsNotExist(err) {
-			*data = *new(T) // если файла нет, создаём пустую структуру
+			*data = *new(T)
 			return nil
 		}
 		return err
