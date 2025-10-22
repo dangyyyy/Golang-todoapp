@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/aquasecurity/table"
@@ -73,6 +74,22 @@ func (todos *Todos) Toggle(index int) error {
 	return nil
 }
 
+func (todos *Todos) Find(title string) error {
+	var filtered Todos
+
+	for _, t := range *todos {
+		if strings.Contains(strings.ToLower(t.Title), strings.ToLower(title)) {
+			filtered = append(filtered, t)
+		}
+	}
+
+	if len(filtered) == 0 {
+		return fmt.Errorf("задачи, содержащие '%s', не найдены", title)
+	}
+
+	Print(filtered, false, false, false)
+	return nil
+}
 func (todos *Todos) EditTask(index int, title string, priority int) error {
 	t := *todos
 	if err := t.validateIndex(index - 1); err != nil {
