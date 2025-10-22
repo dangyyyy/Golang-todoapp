@@ -73,25 +73,22 @@ func (todos *Todos) Toggle(index int) error {
 	return nil
 }
 
-func (todos *Todos) EditTask(index int, title string) error {
+func (todos *Todos) EditTask(index int, title string, priority int) error {
 	t := *todos
 	if err := t.validateIndex(index - 1); err != nil {
 		return err
 	}
-	t[index-1].Title = title
-	return nil
-}
-
-func (todos *Todos) ChangePriority(index int, priority int) error {
-	t := *todos
-	if err := t.validateIndex(index - 1); err != nil {
-		return err
+	if title != "" {
+		t[index-1].Title = title
 	}
-	t[index-1].Priority = priority
+	if priority >= 1 && priority <= 3 {
+		t[index-1].Priority = priority
+	}
+
 	return nil
 }
 
-func PrintFiltered(todos Todos, high, medium, low bool) {
+func Print(todos Todos, high, medium, low bool) {
 	tbl := table.New(os.Stdout)
 	tbl.SetRowLines(false)
 	tbl.SetHeaders("#", "Задачи", "Приоритет", "Выполнено", "Создано", "Завершено")

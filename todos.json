@@ -1,23 +1,9 @@
 [
     {
-        "Title": "Посрать",
+        "Title": "chfnm",
         "Completed": false,
-        "Priority": 3,
-        "CreatedAt": "2025-10-21T23:35:54.307079+03:00",
+        "Priority": 2,
+        "CreatedAt": "2025-10-22T09:44:34.133068+03:00",
         "CompletedAt": null
-    },
-    {
-        "Title": "Пожрать",
-        "Completed": false,
-        "Priority": 3,
-        "CreatedAt": "2025-10-21T23:36:09.108701+03:00",
-        "CompletedAt": null
-    },
-    {
-        "Title": "выпить пива",
-        "Completed": true,
-        "Priority": 1,
-        "CreatedAt": "2025-10-21T23:54:42.821859+03:00",
-        "CompletedAt": "2025-10-21T23:54:53.754885+03:00"
     }
 ]

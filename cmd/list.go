@@ -14,7 +14,7 @@ var listCmd = &cobra.Command{
 	Use:   "list",
 	Short: "Вывести в консоль все задачи",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		todoapp.PrintFiltered(todos, filteredHigh, filteredMedium, filteredLow)
+		todoapp.Print(todos, filteredHigh, filteredMedium, filteredLow)
 		return nil
 	},
 }
